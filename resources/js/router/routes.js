@@ -10,6 +10,10 @@ const routes = [
         component: require('../views/auth/login/LoginPage').default
     },
     {
+        path: '/logout',
+        name: 'logout'
+    },
+    {
         path: '/password-reset/request',
         name: 'password-reset-request',
         component: require('../views/auth/password-reset/request/PasswordResetRequestPage').default

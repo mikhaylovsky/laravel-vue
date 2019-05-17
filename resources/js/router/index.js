@@ -10,6 +10,8 @@ let router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
 
+    axios.defaults.headers.common['Content-Type'] = 'application/json';
+
     if (to.matched.some(route => route.meta.requiresAuth)) {
         if (!store.state.isLoggedIn) {
             next({name: 'login'});
@@ -19,15 +21,33 @@ router.beforeEach((to, from, next) => {
         axios.defaults.headers.post['Authorization'] = `Bearer ${store.state.token}`;
     }
 
-    if (to.path === '/login' && store.state.isLoggedIn) {
+    if (to.name === 'login' && store.state.isLoggedIn) {
         next({ name: 'user' });
+        return;
+    }
+
+    if (to.name === 'logout' && store.state.isLoggedIn) {
+        axios.post(laroute.action('logout')).then(response => {
+            store.commit('logoutUser');
+            next({ name: 'login' });
+
+        }).catch(error => {
+            next({ name: 'home' });
+        });
+
         return;
     }
 
     next();
 });
 
-axios.defaults.headers.common['Content-Type'] = 'application/json';
+axios.interceptors.request.use(function (request) {
+    if (!request.data) {
+        request.data = {};
+    }
+
+    return request;
+});
 
 axios.interceptors.response.use(function (response) {
     return response;

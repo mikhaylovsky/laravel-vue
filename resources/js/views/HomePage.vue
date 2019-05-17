@@ -1,6 +1,7 @@
 <template>
     <div v-if="store.state.isLoggedIn" class="links">
-        <router-link to="/logout">Sign out</router-link>
+        <router-link :to="{ name: 'user' }">Personal account</router-link>
+        <router-link :to="{ name: 'logout' }">Sign out</router-link>
     </div>
 
     <div v-else class="links">

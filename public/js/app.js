@@ -1775,6 +1775,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2003,13 +2004,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    var _this = this;
-
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(laroute.action('get-user'), {}).then(function (response) {})["catch"](function (error) {
-      if (error.response.status === 400) {
-        _this.errors = error.response.data.errors || {};
-      }
-    });
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(laroute.action('get-user'));
   }
 });
 
@@ -37362,7 +37357,15 @@ var render = function() {
     ? _c(
         "div",
         { staticClass: "links" },
-        [_c("router-link", { attrs: { to: "/logout" } }, [_vm._v("Sign out")])],
+        [
+          _c("router-link", { attrs: { to: { name: "user" } } }, [
+            _vm._v("Personal account")
+          ]),
+          _vm._v(" "),
+          _c("router-link", { attrs: { to: { name: "logout" } } }, [
+            _vm._v("Sign out")
+          ])
+        ],
         1
       )
     : _c(
@@ -38357,7 +38360,20 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c(
+    "div",
+    { staticClass: "links" },
+    [
+      _c("router-link", { attrs: { to: { name: "home" } } }, [
+        _vm._v("Homepage")
+      ]),
+      _vm._v(" "),
+      _c("router-link", { attrs: { to: { name: "logout" } } }, [
+        _vm._v("Sign out")
+      ])
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -54371,6 +54387,8 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_0__["default"]({
   routes: _routes__WEBPACK_IMPORTED_MODULE_1__["default"]
 });
 router.beforeEach(function (to, from, next) {
+  axios__WEBPACK_IMPORTED_MODULE_3___default.a.defaults.headers.common['Content-Type'] = 'application/json';
+
   if (to.matched.some(function (route) {
     return route.meta.requiresAuth;
   })) {
@@ -54384,16 +54402,36 @@ router.beforeEach(function (to, from, next) {
     axios__WEBPACK_IMPORTED_MODULE_3___default.a.defaults.headers.post['Authorization'] = "Bearer ".concat(_store__WEBPACK_IMPORTED_MODULE_2__["default"].state.token);
   }
 
-  if (to.path === '/login' && _store__WEBPACK_IMPORTED_MODULE_2__["default"].state.isLoggedIn) {
+  if (to.name === 'login' && _store__WEBPACK_IMPORTED_MODULE_2__["default"].state.isLoggedIn) {
     next({
       name: 'user'
     });
     return;
   }
 
+  if (to.name === 'logout' && _store__WEBPACK_IMPORTED_MODULE_2__["default"].state.isLoggedIn) {
+    axios__WEBPACK_IMPORTED_MODULE_3___default.a.post(laroute.action('logout')).then(function (response) {
+      _store__WEBPACK_IMPORTED_MODULE_2__["default"].commit('logoutUser');
+      next({
+        name: 'login'
+      });
+    })["catch"](function (error) {
+      next({
+        name: 'home'
+      });
+    });
+    return;
+  }
+
   next();
 });
-axios__WEBPACK_IMPORTED_MODULE_3___default.a.defaults.headers.common['Content-Type'] = 'application/json';
+axios__WEBPACK_IMPORTED_MODULE_3___default.a.interceptors.request.use(function (request) {
+  if (!request.data) {
+    request.data = {};
+  }
+
+  return request;
+});
 axios__WEBPACK_IMPORTED_MODULE_3___default.a.interceptors.response.use(function (response) {
   return response;
 }, function (error) {
@@ -54427,6 +54465,9 @@ var routes = [{
   path: '/login',
   name: 'login',
   component: __webpack_require__(/*! ../views/auth/login/LoginPage */ "./resources/js/views/auth/login/LoginPage.vue")["default"]
+}, {
+  path: '/logout',
+  name: 'logout'
 }, {
   path: '/password-reset/request',
   name: 'password-reset-request',
