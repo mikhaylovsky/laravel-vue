@@ -27,7 +27,8 @@ const routes = [
     {
         path: '/user',
         name: 'user',
-        component: require('../views/auth/user/UserPage').default
+        component: require('../views/auth/user/UserPage').default,
+        meta: { requiresAuth: true }
     }
 ];
 

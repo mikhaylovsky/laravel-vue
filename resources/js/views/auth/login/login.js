@@ -1,4 +1,5 @@
 import axios from 'axios';
+import store from '../../../store';
 
 export default {
     data() {
@@ -17,9 +18,10 @@ export default {
 
             axios.post(laroute.action('login'), this.data).then(response => {
                 event.target.reset();
-                this.$router.push({name: 'user'}, function () {
+                localStorage.setItem('token', response.data.access_token);
+                store.commit('loginUser');
+                this.$router.push({name: 'user'});
 
-                });
             }).catch(error => {
                 if (error.response.status === 400) {
                     this.errors = error.response.data.errors || {};

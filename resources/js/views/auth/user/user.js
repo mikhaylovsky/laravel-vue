@@ -2,7 +2,9 @@ import axios from 'axios';
 
 export default {
     mounted() {
-        axios.post(laroute.action('get-user')).then(response => {
+        axios.post(laroute.action('get-user'), {
+
+        }).then(response => {
 
         }).catch(error => {
             if (error.response.status === 400) {
