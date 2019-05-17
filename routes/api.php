@@ -36,6 +36,8 @@ Route::group([
     ], function () {
         Route::post('logout', 'AuthController@logout')->name('logout');
         Route::post('refresh', 'AuthController@refresh')->name('refresh');
-        Route::post('user', 'AuthController@user')->name('get-user');
+
+        Route::get('my-account', 'AccountController@getUser')->name('my-account');
+        Route::put('my-account', 'AccountController@updateUser')->name('update-account');
     });
 });

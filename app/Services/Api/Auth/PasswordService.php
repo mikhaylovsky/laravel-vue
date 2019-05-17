@@ -99,7 +99,7 @@ class PasswordService
             return response()->json(['error' => 'User not found!']);
         }
 
-        $user->password = Hash::make($password);
+        $user->password = $password;
 
         if ($user->save()) {
             $this->passwordResetModel->deleteByEmail($email);

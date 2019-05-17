@@ -11,7 +11,14 @@ const routes = [
     },
     {
         path: '/logout',
-        name: 'logout'
+        name: 'logout',
+        meta: { requiresAuth: true }
+    },
+    {
+        path: '/my-account',
+        name: 'my-account',
+        component: require('../views/auth/my-account/MyAccountPage').default,
+        meta: { requiresAuth: true }
     },
     {
         path: '/password-reset/request',

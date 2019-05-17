@@ -178,7 +178,8 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\Api\AuthServiceProvider::class,
-        App\Providers\Api\EmailServiceProvider::class
+        App\Providers\Api\EmailServiceProvider::class,
+        App\Providers\Api\UserServiceProvider::class,
 
     ],
 

@@ -18,7 +18,7 @@ router.beforeEach((to, from, next) => {
             return;
         }
 
-        axios.defaults.headers.post['Authorization'] = `Bearer ${store.state.token}`;
+        axios.defaults.headers.common['Authorization'] = `Bearer ${store.state.token}`;
     }
 
     if (to.name === 'login' && store.state.isLoggedIn) {

@@ -55,14 +55,4 @@ class AuthController extends Controller
     {
         return $authService->logout();
     }
-
-    /**
-     * Get the authenticated User.
-     *
-     * @return JsonResponse
-     */
-    public function user(): JsonResponse
-    {
-        return response()->json(auth()->user());
-    }
 }
