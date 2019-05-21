@@ -40,6 +40,30 @@ const routes = [
         name: 'user',
         component: require('../views/auth/user/UserPage').default,
         meta: { requiresAuth: true }
+    },
+    {
+        path: '/chat',
+        name: 'chat',
+        component: require('../views/chat/ChatPage').default,
+        children: [
+            {
+                path: 'channels',
+                name: 'channels',
+                component: require('../views/chat/channels/ChannelsListPage').default
+            },
+            {
+                path: 'add-channel',
+                name: 'add-channel',
+                component: require('../views/chat/channels/AddChannelPage').default,
+            }
+            ,
+            {
+                path: 'channels/:channel_id',
+                name: 'channel',
+                component: require('../views/chat/messages/MessagePage').default,
+            }
+        ],
+        meta: { requiresAuth: true }
     }
 ];
 

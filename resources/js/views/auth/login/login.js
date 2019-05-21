@@ -19,6 +19,7 @@ export default {
             axios.post(laroute.action('login'), this.data).then(response => {
                 event.target.reset();
                 localStorage.setItem('token', response.data.access_token);
+                localStorage.setItem('user', JSON.stringify(response.data.user));
                 store.commit('loginUser');
                 this.$router.push({name: 'user'});
 

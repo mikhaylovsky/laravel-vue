@@ -17,7 +17,7 @@ class CheckJsonHeader
     public function handle($request, Closure $next)
     {
         if (!$request->isJson()) {
-            return response()->json(['error' => 'Content/Type: application/json header not found!'], JsonResponse::HTTP_NOT_ACCEPTABLE);
+//            return response()->json(['error' => 'Content/Type: application/json header not found!'], JsonResponse::HTTP_NOT_ACCEPTABLE);
         }
 
         return $next($request);

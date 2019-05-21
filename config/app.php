@@ -174,12 +174,13 @@ return [
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\Api\AuthServiceProvider::class,
         App\Providers\Api\EmailServiceProvider::class,
         App\Providers\Api\UserServiceProvider::class,
+        App\Providers\Api\ChatServiceProvider::class,
 
     ],
 

@@ -16,7 +16,7 @@
         <div id="app">
             <app></app>
         </div>
-
+        
         <script src="{{ asset('js/laroute.js') }}"></script>
         <script src="{{ mix('js/app.js') }}"></script>
     </body>

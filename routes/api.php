@@ -1,5 +1,7 @@
 <?php
 
+use App\Events\MessageSent;
+use App\Models\Chat\Message;
 use Illuminate\Http\Request;
 
 /*
@@ -39,5 +41,25 @@ Route::group([
 
         Route::get('my-account', 'AccountController@getUser')->name('my-account');
         Route::put('my-account', 'AccountController@updateUser')->name('update-account');
+    });
+
+    Route::group([
+        'prefix' => 'chat',
+        'middleware' => 'auth:api',
+        'namespace' => 'Chat'
+    ], function () {
+        Route::post('/', 'ChannelController@getAll')->name('channel-get-all');
+
+        Route::post('save', function () {
+            $message = new Message();
+            $content = request('message');
+            $message->content = $content;
+            $message->save();
+
+            event(new MessageSent(auth()->user(), $content));
+
+//            broadcast(new MessageSent(auth()->user(), $message))->toOthers();
+            return $content;
+        });
     });
 });
